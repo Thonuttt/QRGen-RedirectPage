@@ -1,0 +1,188 @@
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <title>QR Code Generator for Attendance</title>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body id="index">
+    <form id="qrForm">
+        <h1>Generate QR Code for Attendance</h1>
+        <label for="subjectCode">Subject Code:</label>
+        <input type="text" id="subjectCode" name="subjectCode" required><br><br>
+
+        <label for="day">Day:</label>
+        <input type="text" id="day" name="day" required><br><br>
+
+        <label for="time">Time:</label>
+        <input type="text" id="time" name="time" required><br><br>
+
+        <label for="term">Term:</label>
+        <input type="text" id="term" name="term" required><br><br>
+
+        <button type="button" onclick="generateQRCode()">Generate QR Code</button>
+    </form>
+
+    <canvas id="qrcode"></canvas>
+
+    <script>
+        const generateQR = async text => {
+          try {
+            await QRCode.toCanvas(document.getElementById('qrcode'), text)
+          } catch (err) {
+            console.error(err)
+          }
+          // window.location.href = "attendance_form.html";
+        }
+        function generateQRCode() {
+            const subjectCode = document.getElementById('subjectCode').value;
+            const day = document.getElementById('day').value;
+            const time = document.getElementById('time').value;
+            const term = document.getElementById('term').value;
+
+            if (!subjectCode || !day || !time || !term) {
+                alert('Please fill out all fields.');
+                return;
+            }
+
+            const qrData = {
+                subjectCode: subjectCode,
+                day: day,
+                time: time,
+                term: term
+            };
+
+            const qrDataStr = JSON.stringify(qrData);
+
+            const redirectUrl = 'attendance_form.html';
+            const encodedData = encodeURIComponent(qrDataStr);
+
+            // URL containing the encoded QR data
+            const qrUrl = `${redirectUrl}?data=${encodedData}`;
+
+            console.log("QR Data String:", qrDataStr);
+
+            fetch('save_qr_data.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: qrDataStr
+            })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log("DATA");
+                console.log(data);
+                if (data.success) {
+                    console.log("Data saved successfully, generating QR code.");
+                    console.log(typeof qrDataStr);
+                    generateQR(qrDataStr);
+                } else {
+                    console.error("Failed to save data:", data.message);
+                    alert('Failed to save QR data: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.log(error);
+                console.error('Error while saving QR data:', error);
+                alert('Error saving QR data');
+            });
+        }
+    </script>
+</body>
+</html>
+ -->
+
+
+ <!DOCTYPE html>
+<html>
+<head>
+    <title>QR Code Generator for Attendance</title>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body id="index">
+    <form id="qrForm">
+        <h1>Generate QR Code for Attendance</h1>
+        <label for="subjectCode">Subject Code:</label>
+        <input type="text" id="subjectCode" name="subjectCode" required><br><br>
+
+        <label for="day">Day:</label>
+        <input type="text" id="day" name="day" required><br><br>
+
+        <label for="time">Time:</label>
+        <input type="text" id="time" name="time" required><br><br>
+
+        <label for="term">Term:</label>
+        <input type="text" id="term" name="term" required><br><br>
+
+        <button type="button" onclick="generateQRCode()">Generate QR Code</button>
+    </form>
+
+    <canvas id="qrcode"></canvas>
+
+    <script>
+        const generateQR = async text => {
+            try {
+                await QRCode.toCanvas(document.getElementById('qrcode'), text);
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        function generateQRCode() {
+            const subjectCode = document.getElementById('subjectCode').value;
+            const day = document.getElementById('day').value;
+            const time = document.getElementById('time').value;
+            const term = document.getElementById('term').value;
+
+            if (!subjectCode || !day || !time || !term) {
+                alert('Please fill out all fields.');
+                return;
+            }
+
+            const qrData = {
+                subjectCode: subjectCode,
+                day: day,
+                time: time,
+                term: term
+            };
+
+            const qrDataStr = JSON.stringify(qrData);
+
+            // Redirect URL
+            const redirectUrl = 'attendance_form.html';
+            const encodedData = encodeURIComponent(qrDataStr);
+
+            // URL containing the encoded QR data
+            const qrUrl = `${redirectUrl}?data=${encodedData}`;
+
+            console.log("QR URL:", qrUrl);
+
+            fetch('save_qr_data.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: qrDataStr
+            })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log("DATA");
+                console.log(data);
+                if (data.success) {
+                    console.log("Data saved successfully, generating QR code.");
+                    generateQR(qrUrl);  // Use the QR URL here
+                } else {
+                    console.error("Failed to save data:", data.message);
+                    alert('Failed to save QR data: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error while saving QR data:', error);
+                alert('Error saving QR data');
+            });
+        }
+    </script>
+</body>
+</html>

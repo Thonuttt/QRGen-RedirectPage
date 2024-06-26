@@ -1,0 +1,100 @@
+input[type="text"]{
+	width: 200px;
+	padding: 10px;
+	margin: 5px 0;
+	box-sizing: border-box;
+	border: 2px solid #ccc;
+	border-radius: 25px;
+}
+button{
+	color: white;
+	font-size: 15px;
+	font-weight: bold;
+	background-color:  #29C4C7;
+	border-radius: 25px;
+	border: #29C4C7;
+	padding: 10px;
+	width: 150px;
+}
+select[id="term"],select[id="day"], select[id="time"]{
+    width: 150px;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 25px;
+    cursor: pointer;
+}
+canvas{
+	position: absolute;
+	text-align: center;
+	right: 68%;
+	top: 33%;
+}
+
+/*Login.html*/
+#login{
+	background: lightcyan;
+}
+.name{
+	position: absolute;
+	width: 500%;
+	left: 10%;
+	top: 35%;
+	bottom: 25%;
+	font-family: 'Poppins', sans-serif;
+	padding: 20px;
+	padding-leftt: 50px;
+	border-radius: 40px;
+	font-size: 35px;
+} 
+.bg{
+	position: absolute;
+	width: 500px;
+	right: 8%;
+	top: 33%;
+	bottom: 230px;
+    font-family: 'Poppins', sans-serif;
+	padding: 20px;
+	background-color:white;
+	padding-right: 50px;
+	border-radius: 40px;
+} 
+
+/*index.html*/
+#index{
+	background: lightcyan;
+}
+#qrForm{
+	position: absolute;
+	text-align: center;
+	padding-right: 500px;
+	padding-left: 500px;
+	padding-bottom: 60px;
+	font-family: 'Poppins', sans-serif;
+	width: 550px;
+	top: 20%;
+	right: 10%;
+	padding: 20px;
+	background-color:white;
+	border-radius: 50px;
+}
+
+/*attendance_form.html*/
+#attendance{
+	background: lightcyan;
+}
+
+#attendanceForm{
+	position: absolute;
+	text-align: center;
+	padding-right: 500px;
+	padding-left: 500px;
+	padding-bottom: 60px;
+	font-family: 'Poppins', sans-serif;
+	width: 550px;
+	top: 17%;
+	right: 29%;
+	padding: 20px;
+	background-color:white;
+	border-radius: 50px;
+}

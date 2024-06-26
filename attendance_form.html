@@ -1,0 +1,77 @@
+<!-- attendance_form.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Attendance</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body id="attendance">
+    <form id="attendanceForm">
+        <h1>Attendance Form</h1>
+        <label for="studentName">Student Name:</label>
+        <input type="text" id="studentName" name="studentName" required><br><br>
+
+        <label for="studentID">Student ID:</label>
+        <input type="text" id="studentID" name="studentID" required><br><br>
+
+        <label for="day">Day:</label>
+        <input type="text" id="day" name="day" required><br><br>
+
+        <label for="time">Time:</label>
+        <input type="text" id="time" name="time" required><br><br>
+
+        <label for="term">Term:</label>
+        <input type="text" id="term" name="term" required><br><br>
+
+        <input type="hidden" id="qrData" name="qrData">
+        <button type="button" onclick="submitAttendance()">Submit</button>
+    </form>
+
+    <div id="qrDataDisplay"></div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const qrData = urlParams.get('data');
+            
+            if (qrData) {
+                const decodedData = JSON.parse(decodeURIComponent(qrData));
+                document.getElementById('qrData').value = qrData;
+
+                // Display the QR data on the page
+                const qrDataDisplay = document.getElementById('qrDataDisplay');
+                qrDataDisplay.innerHTML = `
+                    <h2>QR Code Data:</h2>
+                    <p>Subject Code: ${decodedData.subjectCode}</p>
+                    <p>Day: ${decodedData.day}</p>
+                    <p>Time: ${decodedData.time}</p>
+                    <p>Term: ${decodedData.term}</p>
+                `;
+            } else {
+                alert('No QR data found in URL.');
+            }
+        });
+
+        function submitAttendance() {
+            const formData = new FormData(document.getElementById('attendanceForm'));
+
+            fetch('submit_attendance.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Attendance submitted successfully');
+                } else {
+                    alert('Failed to submit attendance');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error submitting attendance');
+            });
+        }
+    </script>
+</body>
+</html>
